@@ -1,0 +1,38 @@
+trigger:
+- main
+
+stages:
+  - stage: buildpipeline
+    displayName: CIpipe
+    pool:
+    variables:
+      build configuration:
+      build platform:
+    jobs:
+      - job: buildjob
+        displayName: ci_job
+        steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'restore'
+            projects: 'WebApplication1/WebApplication1.sln'
+            feedsToUse: 'select'
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'build'
+            projects: 'WebApplication1/WebApplication1/WebApplication1.csproj'
+            arguments: '--configuration $(BuildConfiguration)'
+              
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'publish'
+            publishWebProjects: true
+            arguments: '--configuration $(BuildConfiguration) --output $(BuildStagingConfiguration)'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
+            
+              
+            
