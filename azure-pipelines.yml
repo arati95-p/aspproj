@@ -35,8 +35,8 @@ stages:
             publishLocation: 'Container'
             
   - stage: 
-    displayName: 
-    pool:
+    displayName: Release
+    pool: asppool
     jobs:
       - deployment:
         environment:
