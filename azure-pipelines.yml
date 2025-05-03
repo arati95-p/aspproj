@@ -34,22 +34,22 @@ stages:
             ArtifactName: 'drop'
             publishLocation: 'Container'
             
-  # - stage: 
-  #   displayName: Release
-  #   pool: asppool
-  #   jobs:
-  #     - deployment:
-  #       environment: dev_may
-  #       strategy:
-  #         runOnce:
-  #           deploy:
-  #             steps:               
-  #             - task: AzureRmWebAppDeployment@5
-  #               inputs:
-  #                 ConnectionType: 'AzureRM'
-  #                 appType: 'webApp'
-  #                 WebAppName: 
-  #                 packageForLinux: '$(pipeline.workspace)/**/*.zip'
+  - stage: 
+    displayName: Release
+    pool: asppool
+    jobs:
+      - deployment:
+        environment: dev_may
+        strategy:
+          runOnce:
+            deploy:
+              steps:               
+              - task: AzureRmWebAppDeployment@5
+                inputs:
+                  ConnectionType: 'AzureRM'
+                  appType: 'webApp'
+                  WebAppName: 
+                  packageForLinux: '$(pipeline.workspace)/**/*.zip'
             
               
             
